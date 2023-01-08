@@ -1,0 +1,80 @@
+*, *::before, *::after { /* selecting all before and after elements */
+    box-sizing: border-box; /* accounts for border/padding in element width and height */
+    font-family: 'Franklin Gothic Medium', sans-serif; /* applies font to all elements, backup font sans-serif */
+    font-weight: normal 
+}
+
+h1{
+    font-size: 2.5rem ;
+    color: purple;
+    text-shadow: 4px 2px 10px white;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 100px;
+}
+
+body{
+    padding: 0;
+    margin: 0; /* removing padding and margin so background fills entire page */
+    background: linear-gradient(to right, #efd5ff, #515ada); /* first color left, second color right */ 
+}
+
+.calculatorGrid{ /* this applies styling to all calculatorgrid class which wraps elements */
+    display: grid;
+    justify-content: center;
+    align-content: center; /* making display into grid, centering the content horizontally (in middle), not vertically 
+                        because calculator grid doesn't take up full height (of page), to fix we use min-height */
+    min-height: 75vh; /* saying it fills 75% of height all the time (centered vertically) */
+    grid-template-columns: repeat(4, 100px); /* 4 grid columns with each column width 100 pixels */
+    grid-template-rows: minmax(120px, auto) repeat(5, 100px); /* for the rows, notice that the calculator is dynamic in the first row (where the answer is)
+                        in that the calculator will get bigger if the number is very large so we use minmax(120px, auto) for the first row where the min
+                        will always be 120 or auto to fit the numbers as much as it needs to, and then the rest of 5 rows below it */                
+}
+
+.calculatorGrid > button{ /* element -> element selector so only buttons direct child of .calculator-grid class */
+    cursor: pointer; /* changes the cursor look when it hovers over */
+    font-size: 2rem;
+    border: 1px solid white; 
+    outline: none;
+    background-color: rgba(255, 255, 255, .75);
+  }
+
+.calculatorGrid > button:hover { /* styling for when the buttons are hovered over */
+    background-color: rgba(255, 255, 255, .9); /* same thing but opacity of white background color is higher so more white when hover */
+}
+
+.spanTwo {
+    grid-column: span 2; /* this makes the .spanTwo class we set for the AC and = buttons to span 2 of the grid columns we set above (so width is 200px?) */
+}
+
+[data-equals] {
+    border-radius: 0px 0px 55px 0px;
+}
+
+[data-number="."]{
+    border-radius: 0px 0px 0px 55px;  
+    /* to target a specific data-number we simplified it by adding a value indentifier? to the indexhtml */
+}
+
+.output{ /* this solves the grid formatting issue as well because when we create this output box it is a new cell and so pushes the AC button to next line which formats */
+    grid-column: 1 / -1; /* we go from column 1 to -1 (last column) that fills entire width of top row, this is the output box of previous and current operation */
+    background-color: rgba(0, 0, 0, .75); /* note that for all these rgba background colors we easily set opacity as alpha) */
+    display: flex; /* we want to align items inside of this output box using flex, flex-end means the text is on right side and justify-content puts space around */
+    align-items: flex-end; 
+    border-radius: 55px 55px 0px 0px;
+    justify-content: space-around; 
+    flex-direction: column; /* this aligns so that max spacing between the items in the div/text and on right hand side and flex-direction column puts them far apart vertically */
+    padding: 30px;
+    word-wrap: break-word; /* this allows the word/text to wrap around the output box when the number is too long by allowing the word to break */
+    word-break: break-all;
+}
+
+.output .previousOperand { /* .output first because this is the first div class then the nested div class */
+    color:rgba(255, 255, 255, .75);
+    font-size: 1.5rem;
+}
+
+.output .currentOperand {
+    color:white;
+    font-size: 2.5rem;
+}
